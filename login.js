@@ -1,23 +1,15 @@
-function login(username, password) {
-  return username === 'admin' && password === '123';
-}
+const login = require('./login');
 
-if (typeof document !== 'undefined') {
-  const form = document.getElementById('loginForm');
-  const message = document.getElementById('message');
-
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    message.textContent = login(username, password)
-      ? 'Đăng nhập thành công'
-      : 'Sai username hoặc password';
+describe('Hàm login', () => {
+  test('Trả về true khi username và password đúng', () => {
+    expect(login('admin', '123')).toBe(true);
   });
-}
 
-if (typeof module !== 'undefined') {
-  module.exports = login;
-}
+  test('Trả về false khi password sai', () => {
+    expect(login('admin', 'wrong')).toBe(false);
+  });
+
+  test('Trả về false khi username sai', () => {
+    expect(login('user', '123')).toBe(false);
+  });
+});
